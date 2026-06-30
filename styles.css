@@ -1,23 +1,32 @@
 :root {
   color-scheme: light;
-  --bg: #f7f6f1;
+  --bg: #f8f7f3;
   --panel: #ffffff;
   --text: #202124;
   --muted: #5f6368;
-  --line: #dfddd5;
+  --line: #dedbd2;
   --accent: #2f6f73;
   --accent-strong: #184f54;
   --chip: #eef4f1;
+  --warm: #b7573d;
   --shadow: 0 18px 45px rgba(28, 35, 38, 0.09);
+  --soft-shadow: 0 10px 26px rgba(28, 35, 38, 0.07);
 }
 
 * {
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 86px;
+}
+
 body {
   margin: 0;
-  background: var(--bg);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(248, 247, 243, 0) 240px),
+    var(--bg);
   color: var(--text);
   font-family:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -35,10 +44,58 @@ a:hover {
   text-decoration: underline;
 }
 
+.top-nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  border-bottom: 1px solid rgba(222, 219, 210, 0.78);
+  background: rgba(248, 247, 243, 0.88);
+  backdrop-filter: blur(14px);
+}
+
+.nav-inner {
+  width: min(1040px, calc(100% - 40px));
+  min-height: 62px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.nav-brand {
+  color: var(--text);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 19px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-links a {
+  min-height: 34px;
+  padding: 5px 10px;
+  border-radius: 6px;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.nav-links a:hover {
+  background: var(--chip);
+  color: var(--accent-strong);
+  text-decoration: none;
+}
+
 .page {
   width: min(1040px, calc(100% - 40px));
   margin: 0 auto;
-  padding: 54px 0 72px;
+  padding: 48px 0 72px;
 }
 
 .profile {
@@ -117,16 +174,40 @@ a:hover {
   background: #fff;
   color: var(--accent-strong);
   font-weight: 650;
+  box-shadow: 0 1px 0 rgba(28, 35, 38, 0.03);
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.links a:hover,
+.pub-links a:hover {
+  border-color: rgba(47, 111, 115, 0.38);
+  box-shadow: var(--soft-shadow);
+  text-decoration: none;
+  transform: translateY(-1px);
 }
 
 .section {
-  padding: 42px 0 0;
+  padding: 48px 0 0;
 }
 
 .section h2 {
-  margin: 0 0 18px;
-  font-size: 25px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 20px;
+  font-size: 26px;
   line-height: 1.25;
+  letter-spacing: 0;
+}
+
+.section h2::after {
+  content: "";
+  height: 1px;
+  flex: 1;
+  background: var(--line);
 }
 
 .section > p {
@@ -144,11 +225,15 @@ a:hover {
   padding-left: 22px;
 }
 
+.interest-list li::marker {
+  color: var(--accent);
+}
+
 .experience {
   display: grid;
   grid-template-columns: 118px minmax(0, 1fr);
   gap: 24px;
-  padding: 24px 0;
+  padding: 26px 0;
   border-top: 1px solid var(--line);
 }
 
@@ -162,6 +247,7 @@ a:hover {
   padding: 12px;
   background: #fff;
   border: 1px solid var(--line);
+  box-shadow: var(--soft-shadow);
 }
 
 .company-logo img {
@@ -212,7 +298,7 @@ code {
 }
 
 .publication-group {
-  margin-top: 20px;
+  margin-top: 24px;
 }
 
 .pub-note {
@@ -224,6 +310,7 @@ code {
 .publication-group h3 {
   padding-bottom: 8px;
   color: var(--accent-strong);
+  font-family: Georgia, "Times New Roman", serif;
 }
 
 .publication {
@@ -231,8 +318,11 @@ code {
   grid-template-columns: 260px minmax(0, 1fr);
   gap: 22px;
   align-items: center;
-  padding: 20px 0;
+  padding: 22px 0;
   border-top: 1px solid var(--line);
+  transition:
+    background-color 160ms ease,
+    box-shadow 160ms ease;
 }
 
 .publication-image {
@@ -243,6 +333,7 @@ code {
   background: #fff;
   object-fit: contain;
   display: block;
+  box-shadow: var(--soft-shadow);
 }
 
 .publication p {
@@ -292,6 +383,31 @@ code {
 }
 
 @media (max-width: 720px) {
+  html {
+    scroll-padding-top: 112px;
+  }
+
+  .nav-inner {
+    width: min(100% - 28px, 1040px);
+    min-height: auto;
+    padding: 10px 0;
+    display: block;
+  }
+
+  .nav-brand {
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .nav-links {
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
+
+  .nav-links a {
+    white-space: nowrap;
+  }
+
   .page {
     width: min(100% - 28px, 1040px);
     padding-top: 30px;
@@ -304,6 +420,11 @@ code {
 
   .portrait {
     width: 150px;
+  }
+
+  .profile-text h1 span {
+    display: block;
+    margin: 8px 0 0;
   }
 
   .experience-head {
